@@ -15,20 +15,25 @@ NUM_BRANCHES=${#ENV_BRANCHES[@]}
 # Initial checks and preparations
 #
 
-# Change position to the global project root folder
+# Change position to the project root folder
 cd $(dirname $0)/../
 
-# Get the application submodules configured in the global project
+$ECHO "\n$(tput bold)Update the active local branch of the project and submodules status:$(tput sgr0)"
+git pull
+git submodule init
+git submodule update
+
+# Get the submodules configured in the project
 APPL_SUBMODULES=$(git submodule status |awk '{print $2}')
 
-# Check if the global project is a multirepo project
+# Check if the project has any submodule
 if [[ -z $APPL_SUBMODULES ]]
 then
-   $ECHO "\n$(tput bold)The project has not any application submodule$(tput sgr0)\n"
+   $ECHO "\n$(tput bold)The project has not any submodule$(tput sgr0)\n"
    exit 1
 fi
 
-# Update the environment branches of each application submodule
+# Update the environment branches of each submodule
 for SUBMODULE in $APPL_SUBMODULES
 do
    cd $SUBMODULE
@@ -57,7 +62,7 @@ PROJECT_BRANCH=$(git rev-parse --abbrev-ref HEAD)
 #
 if [[ $PROJECT_BRANCH == ${ENV_BRANCHES[0]} ]]
 then
-   $ECHO "\n$(tput bold)The project active branch is '${ENV_BRANCHES[0]}', therefore each application submodule is directly pointed to HEAD of his '${ENV_BRANCHES[0]}' branch:$(tput sgr0)"
+   $ECHO "\n$(tput bold)The project active branch is '${ENV_BRANCHES[0]}', therefore each submodule is directly pointed to HEAD of his '${ENV_BRANCHES[0]}' branch:$(tput sgr0)"
    for SUBMODULE in $APPL_SUBMODULES
    do
       cd $SUBMODULE
