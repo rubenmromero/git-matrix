@@ -81,7 +81,10 @@ else
    do
       if [[ $PROJECT_BRANCH == ${ENV_BRANCHES[$i]} ]]
       then
-         $ECHO "\n$(tput bold)The project active branch is '$PROJECT_BRANCH'. Do merge from the '${ENV_BRANCHES[${i}-1]}' branch belonging to the previous environment:$(tput sgr0)"
+         $ECHO "\n$(tput bold)The project active branch is '$PROJECT_BRANCH'. Do merge from '${ENV_BRANCHES[${i}-1]}' branch belonging to the previous environment:$(tput sgr0)"
+         git checkout ${ENV_BRANCHES[${i}-1]}
+         git pull origin ${ENV_BRANCHES[${i}-1]}
+         git checkout ${ENV_BRANCHES[$i]}
          git merge ${ENV_BRANCHES[${i}-1]}
       fi
    done
