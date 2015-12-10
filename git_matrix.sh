@@ -12,7 +12,35 @@ ENV_BRANCHES=(develop master)
 NUM_BRANCHES=${#ENV_BRANCHES[@]}
 
 #
-# Initial checks and preparations
+# Function for print the script execution mode
+#
+print_exec_mode ()
+{
+   $ECHO "\n\tEXECUTION MODE =>\t$0 [-h|--help] [-k|--keep]"
+   $ECHO "\n\tOptions:"
+   $ECHO "\t\t-h, --help\tShow this help message and exit"
+   $ECHO "\t\t-k, --keep\tKeep the current commit of each submodule"
+   $ECHO "\t\t\t\t(no effect on the first environment branch of the project)\n"
+}
+
+#
+# Check the execution procedure used
+#
+if [[ $1 == '-h' || $1 == '--help' ]]
+then
+   print_exec_mode
+   exit 0
+fi
+
+if [[ $1 == '-k' || $1 == '--keep' ]]
+then
+   UPDATE_SUBMODULES=0
+else
+   UPDATE_SUBMODULES=1
+fi
+
+#
+# Initial checks and provisions
 #
 
 # Change position to the project root folder
@@ -104,19 +132,23 @@ else
          $ECHO "${OPTION}) $BRANCH_INFO"
          OPTION=${OPTION}+1
       done
-      $ECHO "${OPTION}) Keep the current commit"
 
-      $ECHO "\n$(tput bold)Select the number of branch to activate:$(tput sgr0) [$DEF_OPTION] \c" 
-      read SELECTION
-      if [[ -z $SELECTION || $SELECTION -lt 1 || $SELECTION -gt $OPTION ]]
+      if [[ $UPDATE_SUBMODULES -eq 1 ]]
       then
-         SELECTION=$DEF_OPTION
-      fi
+         $ECHO "${OPTION}) Keep the current commit"
 
-      for ((i=1; i<$OPTION; i++))
-      do
-         [[ $SELECTION -eq $i ]] && git checkout ${ENV_BRANCHES[${i}-1]}
-      done
+         $ECHO "\n$(tput bold)Select the number of branch to activate:$(tput sgr0) [$DEF_OPTION] \c"
+         read SELECTION
+         if [[ -z $SELECTION || $SELECTION -lt 1 || $SELECTION -gt $OPTION ]]
+         then
+            SELECTION=$DEF_OPTION
+         fi
+
+         for ((i=1; i<$OPTION; i++))
+         do
+            [[ $SELECTION -eq $i ]] && git checkout ${ENV_BRANCHES[${i}-1]}
+         done
+      fi
 
       for FOLDER in $(echo $SUBMODULE |sed "s/\// /g")
       do
