@@ -30,7 +30,7 @@ If you have several initialized submodules in your project, and you handle sever
 
 ## How does it work?
 
-The git_matrix.sh script works in the following way:
+The `git_matrix.sh` script works in the following way:
 
 * You directly move across the project environment branches using the usual Git commands such as `git checkout <branch>` or any other similar.
 * Being positioned at the branch you want to update, you can directly run the `./bin/git_matrix.sh` script from the project root folder, witch in a first step updates the active local branch (`git pull`) and submodules status (`git submodule init` & `git submodule update`).
