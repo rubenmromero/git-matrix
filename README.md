@@ -41,3 +41,15 @@ Being positioned at the branch you want to update, you can directly run the `./b
     * If the script has been executed with the `[-k|--keep]` optional parameter, it keeps for each submodule the current commit versioned in the active branch, discarding the new submodules versions (commits) that may have been updated due to the merge process.
     * If the script has been executed without any parameter, it shows for each submodule the current commit versioned in the active branch, and interactively asks to select the environment branch in which you want to position the submodule, offering an additional option to keep the current commit.
 * Commits the changes made by the previous action, in the event that there are, including as commit message the list of updates made by the script.
+
+## Prerequisites
+
+
+
+## Configuration
+
+To configure the `git_matrix.sh` script within your project, just run the following command from the project root folder:
+
+    $ curl -s https://raw.githubusercontent.com/rubenmromero/git-matrix/master/install.sh |bash
+
+As a result of this execution, the `git_matrix.sh` script is configured in the `bin` directory located in the project root folder.
