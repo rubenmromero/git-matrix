@@ -44,8 +44,17 @@ Being positioned at the branch you want to update, you can directly run the `./b
 
 ## Prerequisites
 
+* cURL tool for execute the installation command. Installation:
 
-
+        # From Red Hat OS family
+        $ sudo yum install curl
+        
+        # From Debian OS family
+        $ sudo apt-get install curl
+        
+        # From Suse OS family
+        $ sudo zypper install curl
+ 
 ## Configuration
 
 To configure the `git_matrix.sh` script within your project, just run the following command from the project root folder:
@@ -53,3 +62,16 @@ To configure the `git_matrix.sh` script within your project, just run the follow
     $ curl -s https://raw.githubusercontent.com/rubenmromero/git-matrix/master/install.sh |bash
 
 As a result of this execution, the `git_matrix.sh` script is configured in the `bin` directory located in the project root folder.
+
+## Execution Method
+
+Here you are the message you will get if you request help to the `git_matrix.sh` script:
+
+    $ ./git_matrix.sh -h
+    
+    	EXECUTION MODE =>	./git_matrix.sh [-h|--help] [-k|--keep]
+    
+    	Options:
+    		-h, --help	Show this help message and exit
+    		-k, --keep	Keep the current commit of each submodule
+    				(no effect on the first environment branch of the project)
