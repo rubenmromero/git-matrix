@@ -59,7 +59,7 @@ Being positioned at the branch you want to update, you can directly run the `git
 
 To configure the `git_matrix.sh` script within your project, just run the following command from the project root folder:
 
-    $ curl -s https://raw.githubusercontent.com/rubenmromero/git-matrix/master/install.sh |bash
+    $ bash <(curl -s https://raw.githubusercontent.com/rubenmromero/git-matrix/master/install.sh)
 
 As a result of this execution, the `git_matrix.sh` script is configured to manage the environment branches set by you, in the `bin` directory located in your project root folder.
 
