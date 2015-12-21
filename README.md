@@ -72,9 +72,9 @@ Finally, you can add the script to your project repository executing the followi
 
 Here you are the message you will get if you request help to the `git_matrix.sh` script:
 
-    $ ./git_matrix.sh -h
+    $ ./bin/git_matrix.sh --help
     
-    	EXECUTION MODE =>	./git_matrix.sh [-h|--help] [-k|--keep]
+    	EXECUTION MODE =>	./bin/git_matrix.sh [-h|--help] [-k|--keep]
     
     	Options:
     		-h, --help	Show this help message and exit
