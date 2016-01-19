@@ -44,7 +44,7 @@ Being positioned at the branch you want to update, you can directly run the `git
 
 ## Prerequisites
 
-* cURL tool for execute the installation command. Installation:
+* cURL tool for execute the configuration command. Installation:
 
         # From Red Hat OS family
         $ sudo yum install curl

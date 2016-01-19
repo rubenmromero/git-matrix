@@ -52,17 +52,17 @@ git submodule init
 git submodule update
 
 # Get the submodules configured in the project
-APPL_SUBMODULES=$(git submodule status |awk '{print $2}')
+SUBMODULES=$(git submodule status |awk '{print $2}')
 
 # Check if the project has any submodule
-if [[ -z $APPL_SUBMODULES ]]
+if [[ -z $SUBMODULES ]]
 then
    $ECHO "\n$(tput bold)The project has not any submodule$(tput sgr0)\n"
    exit 1
 fi
 
 # Update the environment branches of each submodule
-for SUBMODULE in $APPL_SUBMODULES
+for SUBMODULE in $SUBMODULES
 do
    cd $SUBMODULE
 
@@ -91,7 +91,7 @@ PROJECT_BRANCH=$(git rev-parse --abbrev-ref HEAD)
 if [[ $PROJECT_BRANCH == ${ENV_BRANCHES[0]} ]]
 then
    $ECHO "\n$(tput bold)The project active branch is '${ENV_BRANCHES[0]}', therefore each submodule is directly pointed to HEAD of his '${ENV_BRANCHES[0]}' branch:$(tput sgr0)"
-   for SUBMODULE in $APPL_SUBMODULES
+   for SUBMODULE in $SUBMODULES
    do
       cd $SUBMODULE
 
@@ -117,7 +117,7 @@ else
       fi
    done
 
-   for SUBMODULE in $APPL_SUBMODULES
+   for SUBMODULE in $SUBMODULES
    do
       cd $SUBMODULE
       $ECHO "\n$(tput bold)Current commit of '$SUBMODULE' submodule in '$PROJECT_BRANCH' branch of the project:$(tput sgr0)"
@@ -157,7 +157,7 @@ else
    done
 fi
 
-for SUBMODULE in $APPL_SUBMODULES
+for SUBMODULE in $SUBMODULES
 do
    # Check if the submodule commit has changed
    if [[ $(git diff --exit-code $SUBMODULE) ]]
@@ -196,4 +196,17 @@ then
    $ECHO "\n$(tput bold)List of updates to commit in '$PROJECT_BRANCH' branch of the project:$(tput sgr0)"
    $ECHO "$COMMIT_MSG\n"
    git commit -m "$COMMIT_MSG"
+
+   cat <<_EOF
+
+To publish the local commit use:
+
+	git push
+
+To revert the local commit to HEAD of remote branch execute:
+
+	git reset --hard origin/$PROJECT_BRANCH
+_EOF
 fi
+
+$ECHO
