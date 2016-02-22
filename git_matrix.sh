@@ -196,14 +196,19 @@ then
    $ECHO "\n$(tput bold)List of updates to commit in '$PROJECT_BRANCH' branch of the project:$(tput sgr0)"
    $ECHO "$COMMIT_MSG\n"
    git commit -m "$COMMIT_MSG"
+fi
 
+if [[ $(git diff --exit-code origin/$PROJECT_BRANCH --) ]]
+then
+   $ECHO "\n$(tput bold)Final status of project branches:$(tput sgr0)"
+   git branch -av
    cat <<_EOF
 
-To publish the local commit use:
+To publish the local commits use:
 
 	git push
 
-To revert the local commit to HEAD of remote branch execute:
+To revert the local commits to HEAD of remote branch execute:
 
 	git reset --hard origin/$PROJECT_BRANCH
 _EOF
