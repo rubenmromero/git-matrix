@@ -206,7 +206,7 @@ then
 
 To publish the local commits use:
 
-	git push
+	git push origin $PROJECT_BRANCH
 
 To revert the local commits to HEAD of remote branch execute:
 
