@@ -4,6 +4,8 @@
 # Commands Definition
 #
 ECHO="echo -e"
+TPUT_BOLD="tput bold"
+TPUT_OFF="tput sgr0"
 
 #
 # Variables Definition
@@ -46,7 +48,7 @@ fi
 # Change position to the project root folder
 cd $(dirname $0)/../
 
-$ECHO "\n$(tput bold)Update the active local branch of the project and submodules status:$(tput sgr0)"
+$ECHO "\n$($TPUT_BOLD)Update the active local branch of the project and submodules status:$($TPUT_OFF)"
 git pull
 git submodule init
 git submodule update
@@ -57,7 +59,7 @@ SUBMODULES=$(git submodule status |awk '{print $2}')
 # Check if the project has any submodule
 if [[ -z $SUBMODULES ]]
 then
-   $ECHO "\n$(tput bold)The project has not any submodule$(tput sgr0)\n"
+   $ECHO "\n$($TPUT_BOLD)The project has not any submodule$($TPUT_OFF)\n"
    exit 1
 fi
 
@@ -66,7 +68,7 @@ for SUBMODULE in $SUBMODULES
 do
    cd $SUBMODULE
 
-   $ECHO "\n$(tput bold)Update the environment branches of '$SUBMODULE' submodule:$(tput sgr0)"
+   $ECHO "\n$($TPUT_BOLD)Update the environment branches of '$SUBMODULE' submodule:$($TPUT_OFF)"
    git fetch -p
    for BRANCH in ${ENV_BRANCHES[@]}
    do
@@ -90,12 +92,12 @@ PROJECT_BRANCH=$(git rev-parse --abbrev-ref HEAD)
 #
 if [[ $PROJECT_BRANCH == ${ENV_BRANCHES[0]} ]]
 then
-   $ECHO "\n$(tput bold)The project active branch is '${ENV_BRANCHES[0]}', therefore each submodule is directly pointed to HEAD of his '${ENV_BRANCHES[0]}' branch:$(tput sgr0)"
+   $ECHO "\n$($TPUT_BOLD)The project active branch is '${ENV_BRANCHES[0]}', therefore each submodule is directly pointed to HEAD of his '${ENV_BRANCHES[0]}' branch:$($TPUT_OFF)"
    for SUBMODULE in $SUBMODULES
    do
       cd $SUBMODULE
 
-      $ECHO "\n$(tput bold)'$SUBMODULE' submodule:$(tput sgr0)"
+      $ECHO "\n$($TPUT_BOLD)'$SUBMODULE' submodule:$($TPUT_OFF)"
       git checkout ${ENV_BRANCHES[0]}
       git branch -av
 
@@ -109,7 +111,7 @@ else
    do
       if [[ $PROJECT_BRANCH == ${ENV_BRANCHES[$i]} ]]
       then
-         $ECHO "\n$(tput bold)The project active branch is '$PROJECT_BRANCH'. Do merge from '${ENV_BRANCHES[${i}-1]}' branch belonging to the previous environment:$(tput sgr0)"
+         $ECHO "\n$($TPUT_BOLD)The project active branch is '$PROJECT_BRANCH'. Do merge from '${ENV_BRANCHES[${i}-1]}' branch belonging to the previous environment:$($TPUT_OFF)"
          git checkout ${ENV_BRANCHES[${i}-1]}
          git pull origin ${ENV_BRANCHES[${i}-1]}
          git checkout ${ENV_BRANCHES[$i]}
@@ -120,10 +122,10 @@ else
    for SUBMODULE in $SUBMODULES
    do
       cd $SUBMODULE
-      $ECHO "\n$(tput bold)Current commit of '$SUBMODULE' submodule in '$PROJECT_BRANCH' branch of the project:$(tput sgr0)"
+      $ECHO "\n$($TPUT_BOLD)Current commit of '$SUBMODULE' submodule in '$PROJECT_BRANCH' branch of the project:$($TPUT_OFF)"
       git branch -v |grep "^*"
 
-      $ECHO "\n$(tput bold)Environment branches of '$SUBMODULE' submodule:$(tput sgr0)"
+      $ECHO "\n$($TPUT_BOLD)Environment branches of '$SUBMODULE' submodule:$($TPUT_OFF)"
       typeset -i OPTION=1
       for BRANCH in ${ENV_BRANCHES[@]}
       do
@@ -137,7 +139,7 @@ else
       then
          $ECHO "${OPTION}) Keep the current commit"
 
-         $ECHO "\n$(tput bold)Select the number of branch to activate:$(tput sgr0) [$DEF_OPTION] \c"
+         $ECHO "\n$($TPUT_BOLD)Select the number of branch to activate:$($TPUT_OFF) [$DEF_OPTION] \c"
          read SELECTION
          if [[ -z $SELECTION || $SELECTION -lt 1 || $SELECTION -gt $OPTION ]]
          then
@@ -193,14 +195,14 @@ done
 # Commit changes if exists commit message
 if [[ ! -z $COMMIT_MSG ]]
 then
-   $ECHO "\n$(tput bold)List of updates to commit in '$PROJECT_BRANCH' branch of the project:$(tput sgr0)"
+   $ECHO "\n$($TPUT_BOLD)List of updates to commit in '$PROJECT_BRANCH' branch of the project:$($TPUT_OFF)"
    $ECHO "$COMMIT_MSG\n"
    git commit -m "$COMMIT_MSG"
 fi
 
 if [[ $(git diff --exit-code origin/$PROJECT_BRANCH --) ]]
 then
-   $ECHO "\n$(tput bold)Final status of project branches:$(tput sgr0)"
+   $ECHO "\n$($TPUT_BOLD)Final status of project branches:$($TPUT_OFF)"
    git branch -av
    cat <<_EOF
 
