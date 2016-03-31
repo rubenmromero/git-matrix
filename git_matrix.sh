@@ -45,7 +45,7 @@ fi
 # Initial checks and provisions
 #
 
-# Change position to the project root folder
+# Change position to the project root directory
 cd $(dirname $0)/../
 
 $ECHO "\n$($TPUT_BOLD)Update the active local branch of the project and submodules status:$($TPUT_OFF)"
