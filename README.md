@@ -74,9 +74,11 @@ Here you are the message you will get if you request help to the `git_matrix.sh`
 
     $ ./bin/git_matrix.sh --help
     
-    	EXECUTION MODE =>	./bin/git_matrix.sh [-h|--help] [-k|--keep]
+    	EXECUTION MODE =>	./bin/git_matrix.sh [-h|--help] [-k|--keep] [<submodule>]
     
     	Options:
     		-h, --help	Show this help message and exit
     		-k, --keep	Keep the current commit of each submodule
-    				(no effect on the first environment branch of the project)
+    		<submodule>	Name of submodule for update only this, and keep the rest of submodules in the current commit
+    
+    	[-k|--keep] and <submodule> options have not effect on the first environment branch of the project

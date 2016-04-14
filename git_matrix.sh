@@ -18,11 +18,12 @@ NUM_BRANCHES=${#ENV_BRANCHES[@]}
 #
 print_exec_mode ()
 {
-   $ECHO "\n\tEXECUTION MODE =>\t$0 [-h|--help] [-k|--keep]"
+   $ECHO "\n\tEXECUTION MODE =>\t$0 [-h|--help] [-k|--keep] [<submodule>]"
    $ECHO "\n\tOptions:"
    $ECHO "\t\t-h, --help\tShow this help message and exit"
    $ECHO "\t\t-k, --keep\tKeep the current commit of each submodule"
-   $ECHO "\t\t\t\t(no effect on the first environment branch of the project)\n"
+   $ECHO "\t\t<submodule>\tName of submodule for update only this, and keep the rest of submodules in the current commit"
+   $ECHO "\n\t[-k|--keep] and <submodule> options have not effect on the first environment branch of the project\n"
 }
 
 #
@@ -61,6 +62,26 @@ if [[ -z $SUBMODULES ]]
 then
    $ECHO "\n$($TPUT_BOLD)The project has not any submodule$($TPUT_OFF)\n"
    exit 1
+fi
+
+# Check if it has been specified a specific application submodule as input param for update only this, and keep the rest of application submodules in the current commit
+if [[ ! -z $1 && $UPDATE_SUBMODULES -eq 1 ]]
+then
+   for SUBMODULE in $APPL_SUBMODULES
+   do
+      if [[ $1 == $SUBMODULE ]]
+      then
+         UPDATE_APPL=$1
+         UPDATE_SUBMODULES=0
+         break
+      fi
+   done
+   if [[ $UPDATE_APPL != $1 ]]
+   then
+      $ECHO "\nThe '$1' application submodule specified as input param not exists in the project"
+      print_exec_mode
+      exit 1
+   fi
 fi
 
 # Update the environment branches of each submodule
@@ -135,7 +156,7 @@ else
          OPTION=${OPTION}+1
       done
 
-      if [[ $UPDATE_SUBMODULES -eq 1 ]]
+      if [[ $UPDATE_SUBMODULES -eq 1 || $SUBMODULE == $UPDATE_APPL ]]
       then
          $ECHO "${OPTION}) Keep the current commit"
 
