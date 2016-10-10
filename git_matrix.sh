@@ -94,7 +94,7 @@ do
    for BRANCH in ${ENV_BRANCHES[@]}
    do
       git checkout $BRANCH
-      [[ $(git diff origin/$BRANCH --exit-code) ]] && git pull origin $BRANCH
+      [[ $(git diff --exit-code origin/$BRANCH $BRANCH) ]] && git pull origin $BRANCH
    done
 
    for FOLDER in $(echo $SUBMODULE |sed "s/\// /g")
@@ -221,7 +221,7 @@ then
    git commit -m "$COMMIT_MSG"
 fi
 
-if [[ $(git diff --exit-code origin/$PROJECT_BRANCH --) ]]
+if [[ $(git diff --exit-code origin/$PROJECT_BRANCH $PROJECT_BRANCH) ]]
 then
    $ECHO "\n$($TPUT_BOLD)Final status of project branches:$($TPUT_OFF)"
    git branch -av
