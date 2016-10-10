@@ -78,7 +78,7 @@ then
    done
    if [[ $UPDATE_APPL != $1 ]]
    then
-      $ECHO "\nThe '$1' application submodule specified as input param not exists in the project"
+      $ECHO "\nThe '$1' application submodule specified as input param does not exist in the project"
       print_exec_mode
       exit 1
    fi
