@@ -80,6 +80,6 @@ Here you are the message you will get if you request help to the `git_matrix.sh`
     	Options:
     		-h, --help	Show this help message and exit
     		-k, --keep	Keep the current commit of each submodule
-    		<submodule>	Name of submodule for update only this, and keep the rest of submodules in the current commit
+    		<submodule>	Name of submodule to update only this, and keep the rest of submodules in the current commit
     
     	[-k|--keep] and <submodule> options have not effect on the first environment branch of the project

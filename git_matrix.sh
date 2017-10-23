@@ -22,7 +22,7 @@ print_exec_mode ()
     $ECHO "\n\tOptions:"
     $ECHO "\t\t-h, --help\tShow this help message and exit"
     $ECHO "\t\t-k, --keep\tKeep the current commit of each submodule"
-    $ECHO "\t\t<submodule>\tName of submodule for update only this, and keep the rest of submodules in the current commit"
+    $ECHO "\t\t<submodule>\tName of submodule to update only this, and keep the rest of submodules in the current commit"
     $ECHO "\n\t[-k|--keep] and <submodule> options have not effect on the first environment branch of the project\n"
 }
 
