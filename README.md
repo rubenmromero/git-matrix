@@ -47,15 +47,15 @@ Being positioned at the branch you want to update, you can directly run the `git
 
 * cURL tool for execute the configuration command. Installation:
 
-        # From Red Hat OS family
-        $ sudo yum install curl
-        
-        # From Debian OS family
-        $ sudo apt-get install curl
-        
-        # From Suse OS family
-        $ sudo zypper install curl
- 
+      # From Red Hat OS family
+      $ sudo yum install curl
+      
+      # From Debian OS family
+      $ sudo apt-get install curl
+      
+      # From Suse OS family
+      $ sudo zypper install curl
+
 ## Configuration
 
 To configure the `git_matrix.sh` script within your project, just run the following command from the project root folder:
